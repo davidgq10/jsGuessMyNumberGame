@@ -10,10 +10,48 @@
 
 // Define a random number to guess
 let secretNumber = Math.floor(Math.random() * 20) + 1;
-let score = 20;
+let score = 3;
 let highscore = 0;
 
 document.querySelector('.check').addEventListener('click', function () {
+  verifyGuess();
+});
+
+document.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    verifyGuess();
+  }
+});
+
+document.querySelector('.again').addEventListener('click', function () {
+  console.log(`again`);
+  resetScore();
+  document.querySelector('.score').textContent = score;
+  secretNumber = Math.floor(Math.random() * 20) + 1;
+  document.querySelector('.message').textContent = 'Start guessing...';
+  displayMessage('Start guessing...');
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').textContent = '?';
+  document.querySelector('.number').style.width = '15rem';
+  document.querySelector('.guess').value = '';
+});
+
+function displayMessage(message) {
+  document.querySelector('.message').textContent = message;
+}
+
+function playerGetBetterScore() {
+  if (highscore < score) {
+    highscore = score;
+    document.querySelector('.highscore').textContent = '✨' + highscore;
+  }
+}
+
+function resetScore() {
+  score = 3;
+}
+
+function verifyGuess(params) {
   if (score) {
     const guess = Number(document.querySelector('.guess').value);
     console.log(guess, typeof guess);
@@ -45,32 +83,4 @@ document.querySelector('.check').addEventListener('click', function () {
   else {
     displayMessage('😥You lose!!!, 🎮 restart clicking on Again button!');
   }
-});
-
-document.querySelector('.again').addEventListener('click', function () {
-  console.log(`again`);
-  resetScore();
-  document.querySelector('.score').textContent = score;
-  secretNumber = Math.floor(Math.random() * 20) + 1;
-  document.querySelector('.message').textContent = 'Start guessing...';
-  displayMessage('Start guessing...');
-  document.querySelector('body').style.backgroundColor = '#222';
-  document.querySelector('.number').textContent = '?';
-  document.querySelector('.number').style.width = '15rem';
-  document.querySelector('.guess').value = '';
-});
-
-function displayMessage(message) {
-  document.querySelector('.message').textContent = message;
-}
-
-function playerGetBetterScore() {
-  if (highscore < score) {
-    highscore = score;
-    document.querySelector('.highscore').textContent = '✨' + highscore;
-  }
-}
-
-function resetScore() {
-  score = 20;
 }
